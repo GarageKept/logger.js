@@ -8,11 +8,11 @@
 <div>
    loger.js allows you to write standard log.logTrace('message'); code without worrying about where the log is written to. There is even support for scopes. 
 </div>
-<div>
+<pre>
     log.beginNamedScope('MyFunction', () =>{
         // Your code here
     });
-</div>
+</pre>
 <div>
     The above code will prefix all of your log messages with the scope 'MyFunction', allowing you to log relevant messages focusing on the information you need delivered and let the framework handle wrapping each message with the location information. log.BeginScope will attempt to use an error.stack information to determine the calling function but this is slower than providing a named scope.
 </div>
