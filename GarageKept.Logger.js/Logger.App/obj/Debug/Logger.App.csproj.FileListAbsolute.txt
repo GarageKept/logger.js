@@ -1,0 +1,7 @@
+D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\bin\Logger.App.dll.config
+D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\bin\Logger.App.dll
+D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\bin\Logger.App.pdb
+D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.csprojAssemblyReference.cache
+D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.csproj.CoreCompileInputs.cache
+D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.dll
+D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.pdb

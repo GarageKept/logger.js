@@ -1,0 +1,231 @@
+var Greeter = /** @class */ (function () {
+    function Greeter(element) {
+        this.element = element;
+        this.element.innerHTML += "The time is: ";
+        this.span = document.createElement('span');
+        this.element.appendChild(this.span);
+        this.span.innerText = new Date().toUTCString();
+    }
+    Greeter.prototype.start = function () {
+        var _this = this;
+        var scope = log.beginScope(new CallerScope());
+        log.logTrace("Test2");
+        this.timerToken = setInterval(function () { return _this.span.innerHTML = new Date().toUTCString(); }, 500);
+        log.endScope(scope);
+    };
+    Greeter.prototype.stop = function () {
+        var scope = log.beginScope(new CallerScope());
+        log.logTrace("Test3");
+        clearTimeout(this.timerToken);
+        log.endScope(scope);
+    };
+    return Greeter;
+}());
+window.onload = function () {
+    var scope = log.beginScope(new SimpleScope("This is Windows.onload"));
+    log.logTrace("test");
+    log.logDebug("test");
+    log.logInformation("test");
+    log.logWarning("test");
+    log.logError("test");
+    log.logCritical("test");
+    var el = document.getElementById('content');
+    var greeter = new Greeter(el);
+    greeter.start();
+    log.endScope(scope);
+};
+var LogLevel;
+(function (LogLevel) {
+    LogLevel[LogLevel["Trace"] = 0] = "Trace";
+    LogLevel[LogLevel["Debug"] = 1] = "Debug";
+    LogLevel[LogLevel["Information"] = 2] = "Information";
+    LogLevel[LogLevel["Warning"] = 3] = "Warning";
+    LogLevel[LogLevel["Error"] = 4] = "Error";
+    LogLevel[LogLevel["Critical"] = 5] = "Critical";
+})(LogLevel || (LogLevel = {}));
+/// <reference path="../Logger/LogLevel.ts"/>
+var Logger = /** @class */ (function () {
+    function Logger() {
+        this.loggers = new Array();
+        this.scope = null;
+    }
+    Logger.prototype.beginScope = function (s) {
+        if (this.scope == null) {
+            this.scope = s;
+        }
+        else {
+            this.scope.add(s);
+        }
+        return this.scope;
+    };
+    Logger.prototype.endScope = function (s) {
+        if (this.scope != null) {
+            if (this.scope === s) {
+                this.scope = null;
+            }
+            else {
+                this.scope.remove(s);
+            }
+        }
+    };
+    Logger.prototype.logTrace = function (message, error) {
+        this.log(LogLevel.Trace, message, error);
+    };
+    Logger.prototype.logDebug = function (message, error) {
+        this.log(LogLevel.Debug, message, error);
+    };
+    Logger.prototype.logInformation = function (message, error) {
+        this.log(LogLevel.Information, message, error);
+    };
+    Logger.prototype.logWarning = function (message, error) {
+        this.log(LogLevel.Warning, message, error);
+    };
+    Logger.prototype.logError = function (message, error) {
+        this.log(LogLevel.Error, message, error);
+    };
+    Logger.prototype.logCritical = function (message, error) {
+        this.log(LogLevel.Critical, message, error);
+    };
+    Logger.prototype.log = function (logLevel, message, error) {
+        for (var i = 0; i < this.loggers.length; i++) {
+            this.loggers[i].log(logLevel, message, error, this.scope);
+        }
+    };
+    return Logger;
+}());
+var log = new Logger();
+/// <reference path="../Logger/Logger.ts"/>
+var CallerScope = /** @class */ (function () {
+    function CallerScope() {
+        this.scope = this.getCaller();
+        this.childScope = null;
+    }
+    CallerScope.prototype.add = function (scope) {
+        if (this.childScope == null) {
+            this.childScope = scope;
+        }
+        else {
+            this.childScope.add(scope);
+        }
+    };
+    CallerScope.prototype.remove = function (scope) {
+        if (this.childScope != null) {
+            if (this.childScope === scope) {
+                this.childScope = null;
+            }
+            else {
+                this.childScope.remove(scope);
+            }
+        }
+    };
+    CallerScope.prototype.getCaller = function () {
+        var txt = "";
+        try {
+            throw new Error();
+        }
+        catch (e) {
+            txt = e.stack.split('at ')[3].split(' ')[0];
+        }
+        return txt;
+    };
+    CallerScope.prototype.toString = function () {
+        if (this.childScope != null) {
+            return this.scope + "\\" + this.childScope.toString();
+        }
+        else {
+            return this.scope;
+        }
+    };
+    return CallerScope;
+}());
+/// <reference path="../Logger/Logger.ts"/>
+var ConsoleLogger = /** @class */ (function () {
+    function ConsoleLogger() {
+    }
+    ConsoleLogger.prototype.isEnabled = function (logLevel) {
+        return true;
+    };
+    ConsoleLogger.prototype.log = function (logLevel, message, error, scope) {
+        var style = "background: #222; color: #bada55";
+        switch (logLevel) {
+            case LogLevel.Trace:
+                style = "background: #FFF; color: #303030";
+                break;
+            case LogLevel.Debug:
+                style = "background: #FFF; color: #00ffed";
+                break;
+            case LogLevel.Information:
+                style = "background: #FFF; color: #00ff65";
+                break;
+            case LogLevel.Warning: // yellow
+                style = "background: #FFF; color: #ffb600";
+                break;
+            case LogLevel.Error: // red
+                style = "background: #FFF; color: #F00";
+                break;
+            case LogLevel.Critical: // red?!?
+                style = "background: #F00; color: #FFF";
+                break;
+        }
+        console.log("%c " + this.logLevelToString(logLevel) + ": (" + scope.toString() + ")" + message + " ", style);
+        if (error) {
+            console.log("%c " + this.logLevelToString(logLevel) + ": (" + scope.toString() + ")" + error.message + " ", style);
+            console.log("%c " + this.logLevelToString(logLevel) + ": (" + scope.toString() + ")" + error.stack + " ", style);
+        }
+    };
+    ConsoleLogger.prototype.logLevelToString = function (logLevel) {
+        switch (logLevel) {
+            case LogLevel.Trace:
+                return "Trace";
+            case LogLevel.Information:
+                return "Information";
+            case LogLevel.Debug:
+                return "Debug";
+            case LogLevel.Warning:
+                return "Warning";
+            case LogLevel.Error:
+                return "Error";
+            case LogLevel.Critical:
+                return "Critical";
+            default:
+                return "";
+        }
+    };
+    return ConsoleLogger;
+}());
+if (log) {
+    log.loggers.push(new ConsoleLogger());
+}
+var SimpleScope = /** @class */ (function () {
+    function SimpleScope(name) {
+        this.scope = name;
+        this.childScope = null;
+    }
+    SimpleScope.prototype.add = function (scope) {
+        if (this.childScope == null) {
+            this.childScope = scope;
+        }
+        else {
+            this.childScope.add(scope);
+        }
+    };
+    SimpleScope.prototype.remove = function (scope) {
+        if (this.childScope != null) {
+            if (this.childScope === scope) {
+                this.childScope = null;
+            }
+            else {
+                this.childScope.remove(scope);
+            }
+        }
+    };
+    SimpleScope.prototype.toString = function () {
+        if (this.childScope != null) {
+            return this.scope + "\\" + this.childScope.toString();
+        }
+        else {
+            return this.scope;
+        }
+    };
+    return SimpleScope;
+}());
