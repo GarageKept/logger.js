@@ -1,23 +1,24 @@
-<div>
-    Note: I need to write a better readme file. This is not ready yet, but is how I want it to read when we really have this going.
-</div>
-
 <h1>
     logger.js
 </h1>
 
 <div>
-    Ever had to write a new logging system to change where your logs go? Or, needed to write to multiple sources at once and didn't want to reinvent the wheel yet again?
+    logger.js was written as a way to decouple log writing in applications from the act of writing the logs out to either the console or to persistant storage. I wanted to be able to change out/add new log writers without having to update every application that I wrote.
 </div>
-<h4>
-    Enter logger.js
-</h4>
 <div>
-   Write your logging hooks one time, with scope mind you, and manage the data sources on the back end. 
+   loger.js allows you to write standard log.logTrace('message'); code without worrying about where the log is written to. There is even support for scopes. 
+</div>
+<div>
+    log.beginNamedScope('MyFunction', () =>{
+        // Your code here
+    });
+</div>
+<div>
+    The above code will prefix all of your log messages with the scope 'MyFunction', allowing you to log relevant messages focusing on the information you need delivered and let the framework handle wrapping each message with the location information. log.BeginScope will attempt to use an error.stack information to determine the calling function but this is slower than providing a named scope.
 </div>
 <div>
     logger.js is fully extensible from the start. The console module is already provided to write effective logs to the console from the start. If you need additional modules, such as application insights, add them in, configure them as you need and go.
 </div>
 <div>
     Need a logging source not currently available, roll your own by following our examples.
-<div> 
+<div>
