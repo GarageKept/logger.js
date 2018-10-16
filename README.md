@@ -6,7 +6,7 @@
     logger.js was written as a way to decouple log writing in applications from the act of writing the logs out to either the console or to persistant storage. I wanted to be able to change out/add new log writers without having to update every application that I wrote.
 </div>
 <div>
-   loger.js allows you to write standard log.logTrace('message'); code without worrying about where the log is written to. There is even support for scopes. 
+   logger.js allows you to write standard log.logTrace('message'); code without worrying about where the log is written to. There is even support for scopes. 
 </div>
 <pre>
     log.beginNamedScope('MyFunction', () =>{
