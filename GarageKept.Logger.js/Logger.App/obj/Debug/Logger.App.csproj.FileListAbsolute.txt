@@ -5,3 +5,10 @@ D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.csp
 D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.csproj.CoreCompileInputs.cache
 D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.dll
 D:\Code\repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.pdb
+C:\Users\Darroll\Source\Repos\logger.js\GarageKept.Logger.js\Logger.App\bin\Logger.App.dll.config
+C:\Users\Darroll\Source\Repos\logger.js\GarageKept.Logger.js\Logger.App\bin\Logger.App.dll
+C:\Users\Darroll\Source\Repos\logger.js\GarageKept.Logger.js\Logger.App\bin\Logger.App.pdb
+C:\Users\Darroll\Source\Repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.csprojAssemblyReference.cache
+C:\Users\Darroll\Source\Repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.csproj.CoreCompileInputs.cache
+C:\Users\Darroll\Source\Repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.dll
+C:\Users\Darroll\Source\Repos\logger.js\GarageKept.Logger.js\Logger.App\obj\Debug\Logger.App.pdb
